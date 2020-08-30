@@ -1,0 +1,23 @@
+.item {
+  height: 25px;
+  display: flex;
+  cursor: pointer;
+  margin: 3px;
+}
+
+.done {
+  text-decoration: line-through;
+}
+
+.status-color {
+  height: inherit;
+  width: 10px;
+}
+
+.done > .status-color {
+  background-color: mediumseagreen;
+}
+
+.not-done > .status-color {
+  background-color: lightblue;
+}

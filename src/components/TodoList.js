@@ -1,9 +1,9 @@
 import React from 'react';
 import TodoItem from './TodoItem';
 
-const TodoList = ({ items }) => {
-  const list = items.map(({ item, id }) => (
-    <TodoItem item={item} id={id} key={id} />
+const TodoList = ({ items, onClick }) => {
+  const list = items.map(({ item, id, isDone }) => (
+    <TodoItem item={item} id={id} isDone={isDone} onClick={onClick} key={id} />
   ));
   return <div> {list}</div>;
 };
