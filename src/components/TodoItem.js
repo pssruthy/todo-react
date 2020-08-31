@@ -1,12 +1,9 @@
 import React from 'react';
 import './todo.css';
 
-const TodoItem = ({ item, id, isDone, isProcessing, onClick }) => {
-  let className = 'not-done';
-  if (isProcessing) className = 'processing';
-  if (isDone) className = 'done';
+const TodoItem = ({ item, id, status, onClick }) => {
   return (
-    <div className={`item ${className}`} onClick={() => onClick(id)} id={id}>
+    <div className={`item ${status}`} onClick={() => onClick(id)} id={id}>
       <div className="status-color" />
       <div>{item}</div>
     </div>

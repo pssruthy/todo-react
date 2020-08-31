@@ -2,17 +2,14 @@ import React from 'react';
 import TodoList from './TodoList';
 import InputBox from './InputBox';
 
-const getStatus = (isDone, isProcessing) => {
-  let processing = true;
-  let done = false;
-  if (isProcessing) {
-    done = true;
-    processing = false;
-  }
-  if (isDone) {
-    processing = false;
-  }
-  return { isDone: done, isProcessing: processing };
+const DONE = 'done';
+const PROCESSING = 'processing';
+const UNDONE = 'undone';
+
+const toggleStatus = {
+  [UNDONE]: PROCESSING,
+  [PROCESSING]: DONE,
+  [DONE]: UNDONE,
 };
 
 class Todo extends React.Component {
@@ -27,7 +24,7 @@ class Todo extends React.Component {
     this.setState((state) => {
       const items = state.items.slice();
       const id = state.lastItemId + 1;
-      items.push({ item, id, isDone: false, isProcessing: false });
+      items.push({ item, id, status: UNDONE });
       return { items, lastItemId: id };
     });
   }
@@ -37,9 +34,7 @@ class Todo extends React.Component {
       const { items } = state;
       const newItems = items.map((item) => {
         if (item.id === itemId) {
-          const status = getStatus(item.isDone, item.isProcessing);
-          item.isProcessing = status.isProcessing;
-          item.isDone = status.isDone;
+          item.status = toggleStatus[item.status];
         }
         return item;
       });
