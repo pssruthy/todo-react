@@ -21,3 +21,7 @@
 .not-done > .status-color {
   background-color: lightblue;
 }
+
+.processing > .status-color {
+  background-color: orange;
+}
