@@ -29,16 +29,12 @@ class Todo extends React.Component {
     });
   }
 
-  toggleItemStatus(itemId) {
+  toggleItemStatus(itemId, status) {
     this.setState((state) => {
       const { items } = state;
-      const newItems = items.map((item) => {
-        if (item.id === itemId) {
-          item.status = toggleStatus[item.status];
-        }
-        return item;
-      });
-      return { items: newItems };
+      const itemToToggle = items.find(({ id }) => id === itemId);
+      itemToToggle.status = toggleStatus[status];
+      return { items };
     });
   }
 
