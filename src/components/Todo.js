@@ -1,6 +1,6 @@
 import React from 'react';
-import TodoList from './components/TodoList';
-import InputBox from './components/InputBox';
+import TodoList from './TodoList';
+import InputBox from './InputBox';
 
 const getStatus = (isDone, isProcessing) => {
   let processing = true;
