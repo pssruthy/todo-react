@@ -9,7 +9,7 @@ const TodoItem = ({ item, id, status, onClick }) => {
       id={id}
     >
       <div className="status-color" />
-      <div>{item}</div>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>{item}</div>
     </div>
   );
 };

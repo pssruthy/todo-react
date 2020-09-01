@@ -1,5 +1,16 @@
+input {
+  width: -webkit-fill-available;
+  outline: none;
+}
+
+.todo {
+  margin: 100px auto;
+  width: 30%;
+}
+
 .item {
-  height: 25px;
+  width: inherit;
+  min-height: 27px;
   display: flex;
   cursor: pointer;
   margin: 3px;
@@ -11,7 +22,9 @@
 
 .status-color {
   height: inherit;
-  width: 10px;
+  margin-left: 1rem;
+  width: 15px;
+  margin-right: 1rem;
 }
 
 .done > .status-color {
@@ -27,5 +40,6 @@
 }
 
 .heading {
-  font-size: x-large;
+  font-size: xx-large;
+  text-align: center;
 }

@@ -50,7 +50,7 @@ class Todo extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="todo">
         <TodoHeading
           handleKeyEnter={this.updateHeading}
           heading={this.state.heading}
