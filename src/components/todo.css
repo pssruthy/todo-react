@@ -25,3 +25,7 @@
 .processing > .status-color {
   background-color: orange;
 }
+
+.heading {
+  font-size: x-large;
+}
