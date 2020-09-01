@@ -3,7 +3,7 @@ import React from 'react';
 class InputBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: '' };
+    this.state = { value: this.props.value };
     this.handleOnchange = this.handleOnchange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
@@ -24,7 +24,7 @@ class InputBox extends React.Component {
   render() {
     return (
       <input
-        value={this.state.value}
+        value={this.state.value ? this.state.value : ''}
         onChange={this.handleOnchange}
         onKeyDown={this.handleKeyDown}
       ></input>

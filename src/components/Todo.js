@@ -1,6 +1,7 @@
 import React from 'react';
 import TodoList from './TodoList';
 import InputBox from './InputBox';
+import TodoHeading from './TodoHeading';
 
 const DONE = 'done';
 const PROCESSING = 'processing';
@@ -15,17 +16,32 @@ const toggleStatus = {
 class Todo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { items: [], lastItemId: 0 };
+    this.state = {
+      heading: 'Todo',
+      isHeadingEditing: false,
+      items: [],
+      lastItemId: 0,
+    };
     this.addItem = this.addItem.bind(this);
     this.toggleItemStatus = this.toggleItemStatus.bind(this);
+    this.setHeadingEditable = this.setHeadingEditable.bind(this);
+    this.updateHeading = this.updateHeading.bind(this);
+  }
+
+  updateHeading(heading) {
+    this.setState({ heading, isHeadingEditing: false });
+  }
+
+  setHeadingEditable() {
+    this.setState({ isHeadingEditing: true });
   }
 
   addItem(item) {
-    this.setState((state) => {
-      const items = state.items.slice();
-      const id = state.lastItemId + 1;
-      items.push({ item, id, status: UNDONE });
-      return { items, lastItemId: id };
+    this.setState(({ items, lastItemId }) => {
+      const newItems = items.slice();
+      const id = lastItemId + 1;
+      newItems.push({ item, id, status: UNDONE });
+      return { items: newItems, lastItemId: id };
     });
   }
 
@@ -41,6 +57,17 @@ class Todo extends React.Component {
   render() {
     return (
       <div>
+        {this.state.isHeadingEditing ? (
+          <InputBox
+            handleKeyEnter={this.updateHeading}
+            value={this.state.heading}
+          />
+        ) : (
+          <TodoHeading
+            onClick={this.setHeadingEditable}
+            value={this.state.heading}
+          />
+        )}
         <TodoList items={this.state.items} onClick={this.toggleItemStatus} />
         <InputBox handleKeyEnter={this.addItem} />
       </div>
