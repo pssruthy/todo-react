@@ -24,6 +24,17 @@ class Todo extends React.Component {
     this.addItem = this.addItem.bind(this);
     this.toggleItemStatus = this.toggleItemStatus.bind(this);
     this.updateHeading = this.updateHeading.bind(this);
+    this.removeItem = this.removeItem.bind(this);
+  }
+
+  removeItem(itemId) {
+    console.log('hai');
+    this.setState((state) => {
+      const items = state.items.slice();
+      const itemIndexToRemove = items.findIndex(({ id }) => id === itemId);
+      items.splice(itemIndexToRemove, 1);
+      return { items };
+    });
   }
 
   updateHeading(heading) {
@@ -55,7 +66,11 @@ class Todo extends React.Component {
           handleKeyEnter={this.updateHeading}
           heading={this.state.heading}
         />
-        <TodoList items={this.state.items} onClick={this.toggleItemStatus} />
+        <TodoList
+          items={this.state.items}
+          onClick={this.toggleItemStatus}
+          removeItem={this.removeItem}
+        />
         <InputBox handleKeyEnter={this.addItem} className="item-input" />
       </div>
     );

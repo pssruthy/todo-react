@@ -43,3 +43,18 @@ input {
   font-size: xx-large;
   text-align: center;
 }
+
+.remove-icon {
+  cursor: pointer;
+  display: none;
+  margin-right: 15px;
+}
+
+.item-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-container:hover > .remove-icon {
+  display: block;
+}
