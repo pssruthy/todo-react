@@ -28,7 +28,6 @@ class Todo extends React.Component {
   }
 
   removeItem(itemId) {
-    console.log('hai');
     this.setState((state) => {
       const items = state.items.slice();
       const itemIndexToRemove = items.findIndex(({ id }) => id === itemId);

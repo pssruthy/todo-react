@@ -15,7 +15,7 @@ class InputBox extends React.Component {
 
   handleKeyDown(event) {
     const { key, target } = event;
-    if (key === 'Enter') {
+    if (key === 'Enter' && target.value.trim()) {
       this.props.handleKeyEnter(target.value);
       this.setState({ value: '' });
     }
