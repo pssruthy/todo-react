@@ -24,14 +24,18 @@ class TodoHeading extends React.Component {
         <InputBox
           handleKeyEnter={this.handleKeyEnter}
           value={this.props.heading}
-          className="heading"
         />
       );
     }
     return (
-      <p onClick={this.setHeadingEditable} className="heading">
-        {this.props.heading}
-      </p>
+      <div className="heading-container">
+        <div onClick={this.setHeadingEditable} className="heading">
+          {this.props.heading}
+        </div>
+        <div className="remove-icon" onClick={this.props.removeTodo}>
+          X
+        </div>
+      </div>
     );
   }
 }

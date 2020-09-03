@@ -25,6 +25,7 @@ class Todo extends React.Component {
     this.toggleItemStatus = this.toggleItemStatus.bind(this);
     this.updateHeading = this.updateHeading.bind(this);
     this.removeItem = this.removeItem.bind(this);
+    this.removeTodo = this.removeTodo.bind(this);
   }
 
   removeItem(itemId) {
@@ -41,11 +42,11 @@ class Todo extends React.Component {
   }
 
   addItem(item) {
-    this.setState(({ items, lastItemId }) => {
-      const newItems = items.slice();
-      const id = lastItemId + 1;
-      newItems.push({ item, id, status: UNDONE });
-      return { items: newItems, lastItemId: id };
+    this.setState((state) => {
+      const items = state.items.slice();
+      const id = state.lastItemId + 1;
+      items.push({ item, id, status: UNDONE });
+      return { items, lastItemId: id };
     });
   }
 
@@ -58,11 +59,16 @@ class Todo extends React.Component {
     });
   }
 
+  removeTodo() {
+    this.setState({ heading: 'Todo', items: [], lastItemId: 0 });
+  }
+
   render() {
     return (
       <div className="todo">
         <TodoHeading
           handleKeyEnter={this.updateHeading}
+          removeTodo={this.removeTodo}
           heading={this.state.heading}
         />
         <TodoList

@@ -41,13 +41,20 @@ input {
 
 .heading {
   font-size: xx-large;
-  text-align: center;
+  width: 80%;
 }
 
 .remove-icon {
   cursor: pointer;
   display: none;
+  padding: 1%;
   margin-right: 15px;
+  color: gray;
+}
+
+.heading-container {
+  display: flex;
+  justify-content: space-between;
 }
 
 .item-container {
@@ -56,5 +63,9 @@ input {
 }
 
 .item-container:hover > .remove-icon {
+  display: block;
+}
+
+.heading-container:hover > .remove-icon {
   display: block;
 }
