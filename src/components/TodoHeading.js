@@ -1,5 +1,6 @@
 import React from 'react';
 import InputBox from './InputBox';
+import RemoveIcon from './RemoveIcon';
 
 class TodoHeading extends React.Component {
   constructor(props) {
@@ -32,9 +33,7 @@ class TodoHeading extends React.Component {
         <div onClick={this.setHeadingEditable} className="heading">
           {this.props.heading}
         </div>
-        <div className="remove-icon" onClick={this.props.removeTodo}>
-          X
-        </div>
+        <RemoveIcon onClick={this.props.removeTodo} />
       </div>
     );
   }

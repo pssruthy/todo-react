@@ -1,5 +1,6 @@
 import React from 'react';
 import './todo.css';
+import RemoveIcon from './RemoveIcon';
 
 const TodoItem = ({ item, id, status, onClick, removeItem }) => {
   return (
@@ -12,9 +13,7 @@ const TodoItem = ({ item, id, status, onClick, removeItem }) => {
         <div className="status-color" />
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>{item}</div>
       </div>
-      <div className="remove-icon" onClick={() => removeItem(id)}>
-        X
-      </div>
+      <RemoveIcon onClick={() => removeItem(id)} />
     </div>
   );
 };
