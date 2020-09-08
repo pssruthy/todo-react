@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TodoList from './TodoList';
 import InputBox from './InputBox';
 import TodoHeading from './TodoHeading';
@@ -13,73 +13,56 @@ const toggleStatus = {
   [DONE]: UNDONE,
 };
 
-class Todo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      heading: 'Todo',
-      items: [],
-      lastItemId: 0,
-    };
-    this.addItem = this.addItem.bind(this);
-    this.toggleItemStatus = this.toggleItemStatus.bind(this);
-    this.updateHeading = this.updateHeading.bind(this);
-    this.removeItem = this.removeItem.bind(this);
-    this.removeTodo = this.removeTodo.bind(this);
-  }
+const Todo = () => {
+  const [heading, setHeading] = useState('Todo');
+  const [items, setItems] = useState([]);
+  const [lastId, setLastId] = useState(0);
 
-  removeItem(itemId) {
-    this.setState((state) => {
-      const items = state.items.slice();
-      const itemIndexToRemove = items.findIndex(({ id }) => id === itemId);
-      items.splice(itemIndexToRemove, 1);
-      return { items };
-    });
-  }
+  const updateHeading = (heading) => setHeading(heading);
 
-  updateHeading(heading) {
-    this.setState({ heading });
-  }
-
-  addItem(item) {
-    this.setState((state) => {
-      const items = state.items.slice();
-      const id = state.lastItemId + 1;
-      items.push({ item, id, status: UNDONE });
-      return { items, lastItemId: id };
-    });
-  }
-
-  toggleItemStatus(itemId, status) {
-    this.setState((state) => {
-      const { items } = state;
-      const itemToToggle = items.find(({ id }) => id === itemId);
-      itemToToggle.status = toggleStatus[status];
-      return { items };
-    });
-  }
-
-  removeTodo() {
-    this.setState({ heading: 'Todo', items: [], lastItemId: 0 });
-  }
-
-  render() {
-    return (
-      <div className="todo">
-        <TodoHeading
-          handleKeyEnter={this.updateHeading}
-          removeTodo={this.removeTodo}
-          heading={this.state.heading}
-        />
-        <TodoList
-          items={this.state.items}
-          onClick={this.toggleItemStatus}
-          removeItem={this.removeItem}
-        />
-        <InputBox handleKeyEnter={this.addItem} className="item-input" />
-      </div>
+  const removeItem = (itemId) =>
+    setItems((previousItems) =>
+      previousItems.filter(({ id }) => id !== itemId)
     );
-  }
-}
+
+  const toggleItemStatus = (itemId, status) => {
+    setItems((currentItems) => {
+      const itemsCopy = currentItems.slice();
+      const itemToToggle = itemsCopy.find(({ id }) => id === itemId);
+      itemToToggle.status = toggleStatus[status];
+      return itemsCopy;
+    });
+  };
+
+  const addItem = (item) => {
+    setItems((previousItems) => [
+      ...previousItems,
+      { item, id: lastId + 1, status: UNDONE },
+    ]);
+    setLastId(lastId + 1);
+  };
+
+  const removeTodo = () => {
+    setHeading('Todo');
+    setItems([]);
+    setLastId(0);
+  };
+
+  return (
+    <div className="todo">
+      <TodoHeading
+        handleKeyEnter={updateHeading}
+        removeTodo={removeTodo}
+        heading={heading}
+      />
+      <TodoList
+        items={items}
+        onClick={toggleItemStatus}
+        removeItem={removeItem}
+      />
+      <InputBox handleKeyEnter={addItem} className="item-input" />
+    </div>
+  );
+};
 
 export default Todo;
