@@ -1,4 +1,5 @@
 const express = require('express');
+const { getDefaultStatus, getNextStatus } = require('./status');
 
 const app = express();
 
@@ -6,16 +7,6 @@ app.locals.todo = {
   heading: 'Todo',
   items: [],
   lastId: 0,
-};
-
-const DONE = 'done';
-const PROCESSING = 'processing';
-const UNDONE = 'undone';
-
-const toggleStatus = {
-  [UNDONE]: PROCESSING,
-  [PROCESSING]: DONE,
-  [DONE]: UNDONE,
 };
 
 app.use(express.json());
@@ -36,7 +27,7 @@ app.post('/api/updateHeading', (req, res) => {
 app.post('/api/addItem', (req, res) => {
   const { item } = req.body;
   const { items, lastId } = app.locals.todo;
-  items.push({ item, id: lastId + 1, status: UNDONE });
+  items.push({ item, id: lastId + 1, status: getDefaultStatus() });
   app.locals.todo.lastId++;
   res.end();
 });
@@ -57,7 +48,7 @@ app.post('/api/toggleItemStatus', (req, res) => {
   const { itemId } = req.body;
   const { todo } = app.locals;
   const itemToToggle = todo.items.find(({ id }) => id === itemId);
-  itemToToggle.status = toggleStatus[itemToToggle.status];
+  itemToToggle.status = getNextStatus(itemToToggle.status);
   res.end();
 });
 
