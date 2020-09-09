@@ -4,53 +4,37 @@ import InputBox from './InputBox';
 import TodoHeading from './TodoHeading';
 import TodoApi from './TodoApi';
 
-const DONE = 'done';
-const PROCESSING = 'processing';
-const UNDONE = 'undone';
-
-const toggleStatus = {
-  [UNDONE]: PROCESSING,
-  [PROCESSING]: DONE,
-  [DONE]: UNDONE,
-};
-
 const Todo = () => {
   const [heading, setHeading] = useState('');
   const [items, setItems] = useState([]);
-  const [lastId, setLastId] = useState(0);
 
   useEffect(() => {
     TodoApi.getHeading().then(setHeading);
+    TodoApi.getAllItems().then(setItems);
   }, []);
 
-  const updateHeading = (heading) => setHeading(heading);
+  const updateHeading = (heading) => {
+    TodoApi.updateHeading(heading).then(TodoApi.getHeading).then(setHeading);
+  };
 
-  const removeItem = (itemId) =>
-    setItems((previousItems) =>
-      previousItems.filter(({ id }) => id !== itemId)
-    );
+  const removeItem = (itemId) => {
+    TodoApi.removeItem(itemId).then(TodoApi.getAllItems).then(setItems);
+  };
 
-  const toggleItemStatus = (itemId, status) => {
-    setItems((currentItems) => {
-      const itemsCopy = currentItems.slice();
-      const itemToToggle = itemsCopy.find(({ id }) => id === itemId);
-      itemToToggle.status = toggleStatus[status];
-      return itemsCopy;
-    });
+  const toggleItemStatus = (itemId) => {
+    TodoApi.toggleItemStatus(itemId).then(TodoApi.getAllItems).then(setItems);
   };
 
   const addItem = (item) => {
-    setItems((previousItems) => [
-      ...previousItems,
-      { item, id: lastId + 1, status: UNDONE },
-    ]);
-    setLastId(lastId + 1);
+    TodoApi.addItem(item).then(TodoApi.getAllItems).then(setItems);
   };
 
   const removeTodo = () => {
-    setHeading('Todo');
-    setItems([]);
-    setLastId(0);
+    TodoApi.removeTodo()
+      .then(TodoApi.getHeading)
+      .then(setHeading)
+      .then(TodoApi.getAllItems)
+      .then(setItems);
   };
 
   return (
