@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TodoList from './TodoList';
 import InputBox from './InputBox';
 import TodoHeading from './TodoHeading';
+import TodoApi from './TodoApi';
 
 const DONE = 'done';
 const PROCESSING = 'processing';
@@ -14,9 +15,13 @@ const toggleStatus = {
 };
 
 const Todo = () => {
-  const [heading, setHeading] = useState('Todo');
+  const [heading, setHeading] = useState('');
   const [items, setItems] = useState([]);
   const [lastId, setLastId] = useState(0);
+
+  useEffect(() => {
+    TodoApi.getHeading().then(setHeading);
+  }, []);
 
   const updateHeading = (heading) => setHeading(heading);
 
