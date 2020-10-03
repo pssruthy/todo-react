@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import InputBox from './InputBox';
 import RemoveIcon from './RemoveIcon';
+
+const HeadingContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Heading = styled.div`
+  font-size: xx-large;
+  width: 80%;
+`;
 
 const TodoHeading = (props) => {
   const [editingStatus, setEditingStatus] = useState(false);
@@ -13,13 +24,14 @@ const TodoHeading = (props) => {
   if (editingStatus) {
     return <InputBox handleKeyEnter={handleKeyEnter} value={props.heading} />;
   }
+
   return (
-    <div className="heading-container">
-      <div onClick={() => setEditingStatus(!editingStatus)} className="heading">
+    <HeadingContainer>
+      <Heading onClick={() => setEditingStatus(!editingStatus)}>
         {props.heading}
-      </div>
+      </Heading>
       <RemoveIcon onClick={props.removeTodo} />
-    </div>
+    </HeadingContainer>
   );
 };
 export default TodoHeading;
