@@ -6,6 +6,9 @@ import RemoveIcon from './RemoveIcon';
 const HeadingContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  &:hover > .remove__icon {
+    display: block;
+  }
 `;
 
 const Heading = styled.div`
